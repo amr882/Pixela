@@ -1,18 +1,17 @@
+import 'package:pixela_app/model/wallpaper_resource_model.dart';
+
 class WallpaperModel {
-  final int wallpaperId;
-  final String originalWallpaper;
-  final String alt;
-  final String photographerName;
+  final String per_page;
+  final int page;
+  List<WallpaperResourceModel> wallpaper;
+
   WallpaperModel(
-      {required this.wallpaperId,
-      required this.alt,
-      required this.originalWallpaper,
-      required this.photographerName});
+      {required this.page, required this.per_page, required this.wallpaper});
+
   factory WallpaperModel.fromJson(Map<String, dynamic> json) {
     return WallpaperModel(
-        wallpaperId: json["id"],
-        alt: json["alt"],
-        originalWallpaper: json["src"]["original"],
-        photographerName: json["photographer"]);
+        page: json["page"],
+        per_page: json["per_page"],
+        wallpaper: json["photos"]);
   }
 }

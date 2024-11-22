@@ -1,7 +1,7 @@
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 
 class WallpaperModel {
-  final String per_page;
+  final int per_page;
   final int page;
   List<WallpaperResourceModel> wallpaper;
 

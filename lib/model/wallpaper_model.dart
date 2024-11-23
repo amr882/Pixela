@@ -1,9 +1,7 @@
-import 'package:pixela_app/model/wallpaper_resource_model.dart';
-
 class WallpaperModel {
   final int per_page;
   final int page;
-  List<WallpaperResourceModel> wallpaper;
+  List<dynamic> wallpaper;
 
   WallpaperModel(
       {required this.page, required this.per_page, required this.wallpaper});
@@ -12,6 +10,6 @@ class WallpaperModel {
     return WallpaperModel(
         page: json["page"],
         per_page: json["per_page"],
-        wallpaper: json["photos"]);
+        wallpaper: json["photos"] as List<dynamic>);
   }
 }

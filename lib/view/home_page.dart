@@ -17,8 +17,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final req = await WallpaperApi.getWallpapers(per_page);
       setState(() {
-        wallpapers = req.wallpaper;
-        print(wallpapers);
+        print(req.wallpaper);
       });
     } catch (e) {
       print(e);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 import 'package:pixela_app/services/wallpaper_api.dart';
+import 'package:pixela_app/widgets/wallpaper_card.dart';
+import 'package:sizer/sizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,7 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<WallpaperResourceModel> wallpapers = [];
-  int perPage = 20;
   int currentPage = 1;
   bool isLoading = false;
 
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     isLoading = true;
 
     try {
-      final req = await WallpaperApi.getWallpapers(perPage, currentPage);
+      final req = await WallpaperApi.getWallpapers(currentPage);
       setState(() {
         wallpapers.addAll(req.wallpaper
             .map((item) => WallpaperResourceModel.fromJson(item))
@@ -42,25 +43,40 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NotificationListener<ScrollNotification>(
-        onNotification: (notification) {
-          if (notification.metrics.pixels ==
-                  notification.metrics.maxScrollExtent &&
-              notification is ScrollUpdateNotification &&
-              !isLoading) {
-            fetchWallpapers();
-          }
-          return true;
-        },
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: wallpapers.length,
-          itemBuilder: (context, index) {
-            return Text(wallpapers[index].wallpaperId.toString());
-          },
-        ),
-      ),
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    if (notification.metrics.pixels ==
+                            notification.metrics.maxScrollExtent &&
+                        notification is ScrollUpdateNotification &&
+                        !isLoading) {
+                      fetchWallpapers();
+                    }
+                    return true;
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 2.h),
+                    child: GridView.builder(
+                        itemCount: wallpapers.length,
+                        physics: const BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isPortrait ? 2 : 4,
+                            childAspectRatio: 0.66),
+                        itemBuilder: (context, i) {
+                          final wallpaper = wallpapers[i];
+                          return WallpaperCard(
+                            wallpaper: wallpaper.originalWallpaper,
+                          );
+                        }),
+                  ),
+                )),
     );
   }
 }

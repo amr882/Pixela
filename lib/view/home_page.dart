@@ -11,27 +11,56 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<WallpaperResourceModel> wallpapers = [];
-  int per_page = 5;
+  int perPage = 20;
+  int currentPage = 1;
+  bool isLoading = false;
 
-  Future getWallpapers() async {
+  Future<void> fetchWallpapers() async {
+    if (isLoading) return;
+    isLoading = true;
+
     try {
-      final req = await WallpaperApi.getWallpapers(per_page);
+      final req = await WallpaperApi.getWallpapers(perPage, currentPage);
       setState(() {
-        print(req.wallpaper);
+        wallpapers.addAll(req.wallpaper
+            .map((item) => WallpaperResourceModel.fromJson(item))
+            .toList());
+        currentPage++;
+        isLoading = false;
       });
     } catch (e) {
       print(e);
+      isLoading = false;
     }
   }
 
   @override
   void initState() {
-    getWallpapers();
+    fetchWallpapers();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          if (notification.metrics.pixels ==
+                  notification.metrics.maxScrollExtent &&
+              notification is ScrollUpdateNotification &&
+              !isLoading) {
+            fetchWallpapers();
+          }
+          return true;
+        },
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: wallpapers.length,
+          itemBuilder: (context, index) {
+            return Text(wallpapers[index].wallpaperId.toString());
+          },
+        ),
+      ),
+    );
   }
 }

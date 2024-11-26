@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pixela_app/view/home_page.dart';
+import 'package:pixela_app/widgets/buttom_navigation_bar.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomePage(),
+          home: CustomBottomNavigationBar(),
         );
       },
     );

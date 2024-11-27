@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 import 'package:pixela_app/services/wallpaper_api.dart';
 import 'package:pixela_app/widgets/wallpaper_card.dart';
@@ -61,20 +62,51 @@ class _HomePageState extends State<HomePage> {
                     }
                     return true;
                   },
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 2.h),
-                    child: GridView.builder(
-                        itemCount: wallpapers.length,
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: isPortrait ? 2 : 4,
-                            childAspectRatio: 0.66),
-                        itemBuilder: (context, i) {
-                          final wallpaper = wallpapers[i];
-                          return WallpaperCard(
-                            wallpaper: wallpaper.originalWallpaper,
-                          );
-                        }),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical:3.h ),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.w),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 7.w),
+                              height: 7.h,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xffEFEEEE),
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Find Wallpaper..',
+                                    style: TextStyle(color: Color(0xffb6b6b6)),
+                                  ),
+                                  SvgPicture.asset('assets/search.svg',
+                                      color: const Color(0xffb6b6b6)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                            itemCount: wallpapers.length,
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: isPortrait ? 2 : 4,
+                                    childAspectRatio: 0.63),
+                            itemBuilder: (context, i) {
+                              final wallpaper = wallpapers[i];
+                              return WallpaperCard(
+                                wallpaper: wallpaper.originalWallpaper,
+                              );
+                            }),
+                      ),
+                    ],
                   ),
                 )),
     );

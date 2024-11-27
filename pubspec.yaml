@@ -38,6 +38,7 @@ dependencies:
   http: ^1.2.2
   sizer: ^3.0.4
   salomon_bottom_bar: ^3.3.2
+  flutter_svg: ^2.0.16
 
 dev_dependencies:
   flutter_test:

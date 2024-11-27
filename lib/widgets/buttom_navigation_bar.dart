@@ -27,11 +27,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Container(
-          color: Colors.transparent,
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: SalomonBottomBar(
-              backgroundColor: const Color(0xfff9f9f9),
+              backgroundColor: Colors.white,
               currentIndex: _currentIndex,
               onTap: (value) {
                 setState(() {

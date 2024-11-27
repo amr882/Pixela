@@ -8,22 +8,15 @@ class WallpaperCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
       child: GestureDetector(
-          child: SizedBox(
-
-              // 20.h,
-              height:40.h,
-              // 33.h,
-              child: Column(children: [
-                ClipRRect(
+          child: ClipRRect(
                   borderRadius: BorderRadius.circular(13),
                   child: Image.network(
-                    wallpaper,
-                    fit: BoxFit.cover,
+          wallpaper,
+          fit: BoxFit.cover,
                   ),
-                )
-              ]))),
+                )),
     );
   }
 }

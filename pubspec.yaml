@@ -39,6 +39,7 @@ dependencies:
   sizer: ^3.0.4
   salomon_bottom_bar: ^3.3.2
   flutter_svg: ^2.0.16
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:

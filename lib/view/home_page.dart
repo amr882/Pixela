@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 import 'package:pixela_app/services/wallpaper_api.dart';
 import 'package:pixela_app/view/find_wallpaper.dart';
+import 'package:pixela_app/view/wallpaper_details.dart';
 import 'package:pixela_app/widgets/wallpaper_card.dart';
 import 'package:sizer/sizer.dart';
 
@@ -106,6 +107,13 @@ class _HomePageState extends State<HomePage> {
                             final wallpaper = wallpapers[i];
                             return WallpaperCard(
                               wallpaper: wallpaper.originalWallpaper,
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => WallpaperDetails(
+                                    wallpaperResourceModel: wallpaper,
+                                  ),
+                                ));
+                              },
                             );
                           }),
                     ),

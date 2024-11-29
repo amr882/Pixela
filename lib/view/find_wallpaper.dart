@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 import 'package:pixela_app/services/wallpaper_api.dart';
+import 'package:pixela_app/view/wallpaper_details.dart';
 import 'package:pixela_app/widgets/wallpaper_card.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,7 +17,6 @@ class _FindWallpaperState extends State<FindWallpaper> {
   int currentPage = 1;
   final TextEditingController _cotroller = TextEditingController();
   Future findWallpaper(String searchWord) async {
-    print("++++++++++++++++++++++++++++++++++++try");
     try {
       final req = await WallpaperApi.findWallpaper(currentPage, searchWord);
       setState(() {
@@ -26,7 +26,7 @@ class _FindWallpaperState extends State<FindWallpaper> {
         currentPage++;
       });
     } catch (e) {
-      print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++$e");
+      print(e);
     }
     setState(() {});
   }
@@ -53,26 +53,28 @@ class _FindWallpaperState extends State<FindWallpaper> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
               child: TextField(
-                controller: _cotroller,
-                style: const TextStyle(color: Colors.black),
-                cursorColor: Colors.black,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Find Wallpaper..",
-                  hintStyle: TextStyle(color: Color(0xffb6b6b6)),
-                  filled: true,
-                  fillColor: Color(0xffEFEEEE),
-                  suffixIcon:
-                      Icon(Icons.search_rounded, color: Color(0xffb6b6b6)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.transparent)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.transparent)),
-                ),
-                onSubmitted: (val) => findWallpaper(_cotroller.text),
-              ),
+                  controller: _cotroller,
+                  style: const TextStyle(color: Colors.black),
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Find Wallpaper..",
+                    hintStyle: TextStyle(color: Color(0xffb6b6b6)),
+                    filled: true,
+                    fillColor: Color(0xffEFEEEE),
+                    suffixIcon:
+                        Icon(Icons.search_rounded, color: Color(0xffb6b6b6)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: Colors.transparent)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: Colors.transparent)),
+                  ),
+                  onSubmitted: (val) {
+                    foundWallpapers.clear();
+                    findWallpaper(_cotroller.text);
+                  }),
             ),
             Expanded(
               child: GridView.builder(
@@ -84,6 +86,13 @@ class _FindWallpaperState extends State<FindWallpaper> {
                   itemBuilder: (context, i) {
                     final wallpaper = foundWallpapers[i];
                     return WallpaperCard(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => WallpaperDetails(
+                            wallpaperResourceModel: wallpaper,
+                          ),
+                        ));
+                      },
                       wallpaper: wallpaper.originalWallpaper,
                     );
                   }),

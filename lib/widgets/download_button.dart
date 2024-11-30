@@ -32,7 +32,7 @@ class DownloadButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(300)),
                 child: Center(
                   child: SvgPicture.asset(
-                    "assets/download.svg",
+                    "assets/setWallpaper.svg",
                     height: 4.5.h,
                   ),
                 ),

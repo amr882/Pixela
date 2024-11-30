@@ -40,6 +40,8 @@ dependencies:
   salomon_bottom_bar: ^3.3.2
   flutter_svg: ^2.0.16
   share_plus: ^10.1.2
+  path_provider: ^2.1.5
+  flutter_wallpaper_manager: ^0.0.4
 
 dev_dependencies:
   flutter_test:

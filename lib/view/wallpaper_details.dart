@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 import 'package:pixela_app/widgets/download_button.dart';
@@ -16,6 +18,11 @@ class WallpaperDetails extends StatefulWidget {
 class _WallpaperDetailsState extends State<WallpaperDetails> {
   shareWallpaper() async {
     await Share.share(widget.wallpaperResourceModel.originalWallpaper);
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -92,7 +99,7 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
                     ),
                   ],
                 ),
-              ))
+              )),
         ],
       ),
     );

@@ -1,7 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
+import 'package:pixela_app/services/wallpaper_api.dart';
 import 'package:pixela_app/widgets/download_button.dart';
 import 'package:pixela_app/widgets/wallpaper_pereview.dart';
 import 'package:share_plus/share_plus.dart';
@@ -20,9 +22,10 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
     await Share.share(widget.wallpaperResourceModel.originalWallpaper);
   }
 
-  @override
-  void initState() {
-    super.initState();
+  Future setWallpaper() async {
+    await WallpaperApi.setWallpaper(
+        widget.wallpaperResourceModel.originalWallpaper,
+        WallpaperManager.LOCK_SCREEN);
   }
 
   @override
@@ -78,7 +81,7 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
                       padding: EdgeInsets.symmetric(horizontal: 7.w),
                       child: DownloadButton(
                         onTap: () {
-                          // download wallpaper
+                          setWallpaper();
                         },
                       ),
                     ),

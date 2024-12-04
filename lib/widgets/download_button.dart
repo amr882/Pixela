@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
-class DownloadButton extends StatelessWidget {
+class SetWallpaperButton extends StatelessWidget {
   final void Function() onTap;
-  const DownloadButton({super.key, required this.onTap});
+  const SetWallpaperButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

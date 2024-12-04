@@ -23,7 +23,7 @@ class WallpaperPereview extends StatelessWidget {
             Positioned(
                 right: 16.w,
                 top: 6.h,
-                child: SvgPicture.asset("assets/clock.svg"))
+                child: SvgPicture.asset("assets/clock.svg")),
           ],
         ),
       ),

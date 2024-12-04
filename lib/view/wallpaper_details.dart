@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:pixela_app/model/wallpaper_resource_model.dart';
 import 'package:pixela_app/services/wallpaper_api.dart';
+import 'package:pixela_app/widgets/bottom_sheet.dart';
 import 'package:pixela_app/widgets/download_button.dart';
 import 'package:pixela_app/widgets/wallpaper_pereview.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,7 +21,7 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
     await Share.share(widget.wallpaperResourceModel.originalWallpaper);
   }
 
-  Future setWallpaper() async {
+  Future setWallpaperLOCK_SCREEN() async {
     await WallpaperApi.setWallpaper(
         widget.wallpaperResourceModel.originalWallpaper,
         WallpaperManager.LOCK_SCREEN);
@@ -45,8 +44,11 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
           ),
 
           // wallpaper preview
-          WallpaperPereview(
-            wallpaper: widget.wallpaperResourceModel.originalWallpaper,
+          Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: WallpaperPereview(
+              wallpaper: widget.wallpaperResourceModel.originalWallpaper,
+            ),
           ),
 
           Align(
@@ -75,13 +77,17 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
                       ),
                     ),
 
-                    // download button
+                    // set Wallpaper
 
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 7.w),
-                      child: DownloadButton(
+                      child: SetWallpaperButton(
                         onTap: () {
-                          setWallpaper();
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const CustomBottomSheet();
+                              });
                         },
                       ),
                     ),
@@ -103,6 +109,14 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
                   ],
                 ),
               )),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 3.5.h, horizontal: 5.w),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.arrow_back_rounded)),
+          )
         ],
       ),
     );

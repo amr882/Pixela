@@ -10,19 +10,6 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MaterialButton(
-              onPressed: () {},
-              color: Colors.blue,
-              child: const Text("set wallpaper"),
-            ),
-          ],
-        ),
-      ),
-    );
+    return const Scaffold();
   }
 }

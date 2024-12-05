@@ -21,12 +21,19 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
     await Share.share(widget.wallpaperResourceModel.originalWallpaper);
   }
 
-  Future setWallpaperLOCK_SCREEN() async {
+  Future setWallpaper(int wallpaperType) async {
     await WallpaperApi.setWallpaper(
-        widget.wallpaperResourceModel.originalWallpaper,
-        WallpaperManager.LOCK_SCREEN);
+        widget.wallpaperResourceModel.originalWallpaper, wallpaperType);
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text(
+        "Wallpaper set successfully",
+      ),
+      duration: Duration(seconds: 3),
+    ));
   }
 
+  bool liked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +93,17 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
                           showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return const CustomBottomSheet();
+                                return CustomBottomSheet(
+                                  homeScreen: () {
+                                    setWallpaper(WallpaperManager.HOME_SCREEN);
+                                  },
+                                  lockScreen: () {
+                                    setWallpaper(WallpaperManager.LOCK_SCREEN);
+                                  },
+                                  bothScreen: () {
+                                    setWallpaper(WallpaperManager.BOTH_SCREEN);
+                                  },
+                                );
                               });
                         },
                       ),
@@ -99,11 +116,18 @@ class _WallpaperDetailsState extends State<WallpaperDetails> {
                         borderRadius: BorderRadius.circular(100),
                         color: const Color.fromARGB(120, 0, 0, 0),
                       ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.favorite_outline_rounded,
-                          color: Colors.white,
-                        ),
+                      child: Center(
+                        child: IconButton(
+                            icon: liked
+                                ? const Icon(Icons.favorite)
+                                : const Icon(Icons.favorite_border),
+                            color:
+                                liked ? const Color(0xffFA4A0C) : Colors.white,
+                            onPressed: () {
+                              setState(() {
+                                liked = !liked;
+                              });
+                            }),
                       ),
                     ),
                   ],

@@ -3,7 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({super.key});
+  final void Function()? homeScreen;
+  final void Function()? lockScreen;
+  final void Function()? bothScreen;
+  const CustomBottomSheet(
+      {super.key,
+      required this.homeScreen,
+      required this.lockScreen,
+      required this.bothScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +48,7 @@ class CustomBottomSheet extends StatelessWidget {
                   padding: EdgeInsets.only(left: 5.w, top: 2.h),
                   child: GestureDetector(
                     //home screen
-                    onTap: () {},
+                    onTap: homeScreen,
                     child: Row(
                       children: [
                         SvgPicture.asset(
@@ -66,7 +73,7 @@ class CustomBottomSheet extends StatelessWidget {
                   padding: EdgeInsets.only(left: 5.w, top: 2.h),
                   child: GestureDetector(
                     //LOCK_SCREEN
-                    onTap: () {},
+                    onTap: lockScreen,
                     child: Row(
                       children: [
                         SvgPicture.asset(
@@ -90,7 +97,7 @@ class CustomBottomSheet extends StatelessWidget {
                   padding: EdgeInsets.only(left: 5.w, top: 2.h),
                   child: GestureDetector(
                     // both
-                    onTap: () {},
+                    onTap: bothScreen,
                     child: Row(
                       children: [
                         SvgPicture.asset(
@@ -105,9 +112,30 @@ class CustomBottomSheet extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // cancel button
               ],
+            ),
+          ),
+          SizedBox(
+            height: 2.5.h,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              width: 70.w,
+              height: 7.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: const Color(0xff191e31),
+              ),
+              child: const Center(
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              ),
             ),
           )
         ],
